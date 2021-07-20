@@ -36,21 +36,20 @@ const useStyles = makeStyles(theme => ({
     maxWidth: '40%',
   },
   large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
     margin: theme.spacing(2),
-    padding: theme.spacing(3),
+    padding: theme.spacing(7),
     marginLeft: theme.spacing(32),
   },
   margin: {
     margin: theme.spacing(1),
+    padding: theme.spacing(1),
     color: theme.palette.getContrastText(purple[500]),
     backgroundColor: purple[500],
     '&:hover': {
       backgroundColor: purple[700],
     },
   },
-
+  
 }));
 
 export { useStyles };

@@ -18,6 +18,9 @@ import Negocios from 'src/pages/Business'
 import Pag404 from 'src/pages/Pag404';
 import ListVagas from 'src/components/Vagas';
 import RegisterProfile from 'src/components/Profile/Form';
+import ListMembros from 'src/components/Business/Membros';
+import ChangePassword from 'src/components/ChangPassword';
+
 
 const Routes = () => {
   return (
@@ -42,9 +45,11 @@ const Routes = () => {
        
           <PrivateRoute path='/dash' component={HomeUser} />
           <PrivateRoute path='/atualizarPerfil' component={RegisterProfile} />
+          <PrivateRoute path="/alterarSenha" exact component={ChangePassword} />
+          <PrivateRoute path="/membros" exact component={ListMembros} />
 
           
-          <PrivateRoute path="/vagas"  component={ListVagas} />
+          <PrivateRoute path="/vagas" exact component={ListVagas} />
           
 
           <Route path='*' exact={true} component={Pag404} />

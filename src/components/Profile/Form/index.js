@@ -1,31 +1,48 @@
 import React, { memo, useState } from 'react';
-import { Button, Grid, Typography,TextField, FormControl, Avatar } from '@material-ui/core';
+import PropTypes from 'prop-types';
+import { Button, Grid, Typography,TextField, Avatar } from '@material-ui/core';
+import MuiPhoneNumber from "material-ui-phone-number";
 import { useStyles } from './styles';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-import { registerUser } from 'src/store/actions/';
+
+import { editUser } from 'src/store/actions/';
 import { SCREEN_AUTH } from 'src/helpers/messageSource'
 import Alert from 'src/components/MessageAlert'
 
-const RegisterProfile = ({ dispatch, alert }) => {
+
+const RegisterProfile = ({ dispatch, userState }) => {
+  
+  const history = useHistory();
+
   const classes = useStyles();
 
   const [name, setName] = useState('');
   const [lastName, setLastName] = useState('');
   const [phone, setPhone] = useState('');
-  const [cep, setCep] = useState('');
-  const [logradouro, setLogradouro] = useState('');
-  const [bairro, setBairro] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+  const [address, setAddress] = useState('');
+  const [burgh, setBurgh] = useState('');
   const [city, setCity] = useState('');
   const [number, setNumber] = useState('');
   const [state, setState] = useState('');
   const [complement, setComplement] = useState('');
+ 
+
+  const handlePhoneChange = (value) => {
+    setPhone({phone : value});
+  }
 
   const handleSubmit = (event) => {
 
     event.preventDefault();
-    dispatch(registerUser({ name, lastName, phone, cep, logradouro, bairro, city, number}));
+    dispatch(editUser({ name, lastName, phone, postalCode, address, burgh, city, number, state, complement}));
    
+  }
+
+  const redirectMenu = (url) => {
+    history.push(url);
   }
 
 
@@ -33,23 +50,23 @@ const RegisterProfile = ({ dispatch, alert }) => {
     <Grid container  
       direction="column" 
       justify="center" 
+      spacing={2}
       alignItems="center" >
       <Grid item
         className={classes.box} >  
-        <FormControl>
           <div>
-            <Alert placeParam={SCREEN_AUTH.REGISTER} />
+            <Alert placeParam={SCREEN_AUTH.USER} />
         
-              <Grid container spacing={1}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} sm={12}>
                   <Typography  component="h1" variant="h5">
                     Atualizar Perfil
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} sm={12}>
                   <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" className={classes.large} />
-                  <div className={classes.btn2}>
-                    <Button variant="contained" color="primary" className={classes.margin}>
+                  <div >
+                    <Button variant="contained" color="primary" className={classes.submit}>
                       Carregar Foto
                     </Button>
                   </div>
@@ -67,7 +84,9 @@ const RegisterProfile = ({ dispatch, alert }) => {
                     autoFocus
                     className={classes.field}
                     onChange={e => setName(e.target.value)}
-                  />
+                  >
+                    {userState.listUsers.name}
+                  </TextField>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -83,19 +102,18 @@ const RegisterProfile = ({ dispatch, alert }) => {
                     onChange={e => setLastName(e.target.value)}
                   />
                 </Grid>
-                <Grid item xs={12}>
-                  <TextField
+                <Grid item xs={12} sm={6}>
+                  <MuiPhoneNumber
+                    preferredCountries={["br"]}
+                    disableAreaCodes={true}
+                    defaultCountry={"br"}
                     variant="outlined"
+                    type="Telefone"
                     value={phone}
-                    required
-                    fullWidth
-                    name="telefone"
-                    label="Telefone"
-                    type="telefone"
                     id="telefone"
                     autoComplete="telefone"
-                    className={classes.field}
-                    onChange={e => setPhone(e.target.value)}
+                    className={classes.phone}
+                    onChange={handlePhoneChange}
                   />
                 </Grid>
                 <Grid item xs={12} sm={12}>
@@ -105,47 +123,47 @@ const RegisterProfile = ({ dispatch, alert }) => {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    autoComplete="Cep"
-                    name="cep"
+                    autoComplete="PostalCode"
+                    name="postalCode"
                     variant="outlined"
-                    value={cep}
+                    value={postalCode}
                     required
                     fullWidth
-                    id="cep"
+                    id="postalCode"
                     label="Cep"
                     autoFocus
                     className={classes.field}
-                    onChange={e => setCep(e.target.value)}
+                    onChange={e => setPostalCode(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    autoComplete="Logradouro"
-                    name="logradouro"
+                    autoComplete="Address"
+                    name="address"
                     variant="outlined"
-                    value={logradouro}
+                    value={address}
                     required
                     fullWidth
-                    id="logradouro"
+                    id="address"
                     label="Logradouro/Rua"
                     autoFocus
                     className={classes.field}
-                    onChange={e => setLogradouro(e.target.value)}
+                    onChange={e => setAddress(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <TextField
-                    autoComplete="Bairro"
-                    name="bairro"
+                    autoComplete="Burgh"
+                    name="burgh"
                     variant="outlined"
-                    value={bairro}
+                    value={burgh}
                     required
                     fullWidth
-                    id="bairro"
+                    id="burgh"
                     label="Bairro"
                     autoFocus
                     className={classes.field}
-                    onChange={e => setBairro(e.target.value)}
+                    onChange={e => setBurgh(e.target.value)}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -187,7 +205,7 @@ const RegisterProfile = ({ dispatch, alert }) => {
                     required
                     fullWidth
                     id="state"
-                    label="State"
+                    label="Estado"
                     autoFocus
                     className={classes.field}
                     onChange={e => setState(e.target.value)}
@@ -210,7 +228,16 @@ const RegisterProfile = ({ dispatch, alert }) => {
                 </Grid>
                 <Grid item xs={12}>
                     <Button
-                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={() => redirectMenu('/alterarSenha')}
+                  >
+                    Alterar Senha
+                  </Button>
+                </Grid>
+                <Grid item xs={12}>
+                    <Button
                     variant="contained"
                     color="primary"
                     className={classes.submit}
@@ -222,15 +249,20 @@ const RegisterProfile = ({ dispatch, alert }) => {
               </Grid>
           </div>
         
-        </FormControl>
       </Grid>
     </Grid>
   );
 }
 
+RegisterProfile.propTypes = {
+  dispatch : PropTypes.func,
+  userState : PropTypes.object,
+}
+
 const mapStateToProps = state => ({
   users: state.users,
   alert: state.alerts,
+  userState : state.user,
 });
 
 export default connect(mapStateToProps)(memo(RegisterProfile));

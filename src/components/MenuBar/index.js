@@ -89,7 +89,7 @@ const MenuBar = ({dispatch, userState}) => {
                 <MenuItem onClick={() => redirectMenu("/atualizarPerfil")}>Perfil</MenuItem>
                 <MenuItem onClick={() => redirectMenu('/negocios/id')} >Negócios</MenuItem>
                 <MenuItem onClick={() => redirectMenu("/vagas")}>Vagas</MenuItem>
-                <MenuItem onClick={() => redirectMenu('/negocios/membros')}>Membros</MenuItem>
+                <MenuItem onClick={() => redirectMenu('/membros')}>Membros</MenuItem>
               </Menu>
           </Grid>
           <Grid item>

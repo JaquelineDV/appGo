@@ -10,12 +10,23 @@ const initialState = {
   },
   listUsers : [
     {
+      id: '0',
       name : 'Jaqueline',
       lastName: 'Romao',
       mail: 'jaque@gmail.com',
-      phone: '17997175000',
-      password: '123',
-      address : '', 
+      password: '202cb962ac59075b964b07152d234b70',
+      address : {
+         street : 'Jorge Matos', 
+        burgh : 'Centro', 
+        city : 'Catanduva', 
+        number : '7', 
+        complement : 'Casa', 
+      },
+      phone : { 
+        type : 'Celular',
+        country : '+55',
+        number : '17997175000'
+      }
     }
   ]
 }
@@ -56,6 +67,13 @@ const userReducer = (state = initialState, action) => {
       default: {
         return state;
       }
+    case CONSTANTS.GET_USER_BY_ID:
+      return {
+        ...state,
+        isLoggedIn: true,
+        edit: action.payload.edit,
+      };
+      
   }
 };
 

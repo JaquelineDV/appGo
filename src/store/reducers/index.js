@@ -35,11 +35,24 @@ const rootReducer = (state, action) => {
         },
         listUsers : [
           {
+            id: '0',
             name : 'Jaqueline',
             lastName: 'Romao',
             mail: 'jaque@gmail.com',
-            phone: '17997175000',
-            password: '123',
+            password: '202cb962ac59075b964b07152d234b70',
+            address : {
+              street : 'Jorge Matos', 
+              burgh : 'Centro', 
+              city : 'Catanduva', 
+              number : '7', 
+              complement : 'Casa', 
+            },
+            phone : { 
+              type : 'Celular',
+              country : '+55',
+              number : '17997175000'
+            }
+
           }
         ],
         alert : {

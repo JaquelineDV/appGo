@@ -34,7 +34,7 @@ export const situationsCompany = [
   },
   {
     id : 2,
-    name : 'Bloequeada'
+    name : 'Bloqueada'
   },
 ]
 
